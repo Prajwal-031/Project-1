@@ -41,6 +41,9 @@ let glitchStates = {
     speedMultiplier: 1
 };
 
+// Score variable
+let score = 0;
+
 // Handle keydown events
 document.addEventListener('keydown', (event) => {
     event.preventDefault();
@@ -61,6 +64,18 @@ document.addEventListener('keyup', (event) => {
         case 'ArrowRight': movement.right = false; break;
     }
 });
+
+// Sound effect function (simple beep using Web Audio API)
+function playBeep() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioCtx = new AudioContext();
+    const oscillator = audioCtx.createOscillator();
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // A4 note
+    oscillator.connect(audioCtx.destination);
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.50); // beep duration 150ms
+}
 
 // Update player position with bugs
 function updatePlayerPosition() {
@@ -105,7 +120,7 @@ function updatePlayerPosition() {
     }
 }
 
-// Modified draw player with glitch effect
+// Draw player with glitch effect
 function drawPlayer() {
     ctx.fillStyle = player.color;
     ctx.fillRect(player.x, player.y, player.size, player.size);
@@ -123,20 +138,24 @@ function drawPlayer() {
     }
 }
 
-// Modified target behavior
+// Draw target with occasional movement
 function drawTarget() {
-    // Target occasionally moves
     if (Math.random() < 0.02) {
         target.x += (Math.random() - 0.5) * 20;
         target.y += (Math.random() - 0.5) * 20;
-        
-        // Keep target in bounds
         target.x = Math.max(0, Math.min(canvas.width - target.size, target.x));
         target.y = Math.max(0, Math.min(canvas.height - target.size, target.y));
     }
     
     ctx.fillStyle = target.color;
     ctx.fillRect(target.x, target.y, target.size, target.size);
+}
+
+// Draw the current score
+function drawScore() {
+    ctx.fillStyle = 'black';
+    ctx.font = '20px Arial';
+    ctx.fillText(`Score: ${score}`, 10, 30);
 }
 
 // Clear the canvas
@@ -150,7 +169,9 @@ function checkWin() {
         player.x + player.size > target.x &&
         player.y < target.y + target.size &&
         player.y + player.size > target.y) {
-        alert('You reached the target!');
+        
+        score++;               // Increase score
+        playBeep();            // Play beep sound
         resetGame();
     }
 }
@@ -170,6 +191,7 @@ function updateGame() {
     checkWin();
     drawPlayer();
     drawTarget();
+    drawScore();
     requestAnimationFrame(updateGame);
 }
 
