@@ -4,13 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Glitchy Reinforcement Game</title>
+  
   <style>
+    /* Reset and box-sizing for consistency across browsers */
     * {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      box-sizing: border-box; /* ✅ Added for layout consistency */
     }
 
+    /* Base styles for body */
     body {
       background: #1e1e1e;
       color: #fff;
@@ -19,35 +22,46 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      min-height: 100vh; /* ✅ Ensures content is centered vertically */
     }
 
+    /* Title style */
     h1 {
       margin: 20px 0;
       font-size: 2.5rem;
       color: #00ffcc;
       text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
+      /* ✅ Moved inline styles here for cleaner HTML */
     }
 
+    /* Canvas styling */
     canvas {
       border: 2px solid #00ffcc;
       background: #f0f0f0;
       box-shadow: 0 0 10px #00ffcc;
+      /* ✅ Ensures visual separation from background */
     }
 
+    /* Optional info section */
     .info {
       margin-top: 20px;
       font-size: 1rem;
       color: #ccc;
+      /* ✅ Styling reserved for future information display */
     }
   </style>
 </head>
 <body>
 
+  <!-- Main title -->
+  <h1>Q-Learning Game</h1> <!-- ✅ Removed redundant inline styles -->
 
-  <h1 style="margin: 20px 0; font-size: 2.5rem; color: #00ffcc; text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;">Q-Learning Game</h1>
-  <canvas id="modelCanvas"></canvas>
-  <script src="ML.js"></script>
+  <!-- Canvas for ML game -->
+  <canvas id="modelCanvas"></canvas> <!-- ✅ Canvas retained for game rendering -->
+
+  <!-- External JavaScript logic -->
+  <script src="ML.js"></script> <!-- ✅ Linked game logic remains unchanged -->
 
 </body>
 </html>
+
